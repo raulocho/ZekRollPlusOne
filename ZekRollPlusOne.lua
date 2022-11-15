@@ -41,7 +41,7 @@ function Config:GetThemeColor()
 end
 
 --[[
-	Function to create a button with a determinated function passed as parameter.
+	Create a button with a onClick function passed per parameter.
 ]]--
 function Config:CreateButton(layer,point, relativeFrame, relativePoint, xOffset,yOffset, text, onClickFunction, inactive)
 	local btn = CreateFrame("Button", "nil", layer, "GameMenuButtonTemplate");
@@ -59,37 +59,45 @@ function Config:CreateButton(layer,point, relativeFrame, relativePoint, xOffset,
 end
 
 --[[
-	To Apply Class Color to desired texts.
+	Set ClassColor in a specific text.
 ]]--
 function Config:ApplyClassColor(textMain,textOff,class)
-	print(class);
 	if (string.match(class, "Bruj")  or string.match(class, "Warlo")) then
 		textMain:SetTextColor(defaults.classColors.WARLOCK.r,defaults.classColors.WARLOCK.g,defaults.classColors.WARLOCK.b);
 		textOff:SetTextColor(defaults.classColors.WARLOCK.r,defaults.classColors.WARLOCK.g,defaults.classColors.WARLOCK.b);
+
 	elseif (string.match(class, "Cazador") or string.match(class, "Hunter")) then 
 		textMain:SetTextColor(defaults.classColors.HUNTER.r,defaults.classColors.HUNTER.g,defaults.classColors.HUNTER.b);
 		textOff:SetTextColor(defaults.classColors.HUNTER.r,defaults.classColors.HUNTER.g,defaults.classColors.HUNTER.b);
+
 	elseif (string.match(class, "Guerrer") or string.match(class, "Warr")) then 
 		textMain:SetTextColor(defaults.classColors.WARRIOR.r,defaults.classColors.WARRIOR.g,defaults.classColors.WARRIOR.b);
 		textOff:SetTextColor(defaults.classColors.WARRIOR.r,defaults.classColors.WARRIOR.g,defaults.classColors.WARRIOR.b);
+
 	elseif (string.match(class, "Chaman") or string.match(class, "Shaman")) then 
 		textMain:SetTextColor(defaults.classColors.SHAMAN.r,defaults.classColors.SHAMAN.g,defaults.classColors.SHAMAN.b);
 		textOff:SetTextColor(defaults.classColors.SHAMAN.r,defaults.classColors.SHAMAN.g,defaults.classColors.SHAMAN.b);
+
 	elseif (string.match(class, "Mag") or string.match(class, "Mage")) then 
 		textMain:SetTextColor(defaults.classColors.MAGE.r,defaults.classColors.MAGE.g,defaults.classColors.MAGE.b);
 		textOff:SetTextColor(defaults.classColors.MAGE.r,defaults.classColors.MAGE.g,defaults.classColors.MAGE.b);
+
 	elseif (string.match(class, "Picar") or string.match(class, "Rogu")) then 
 		textMain:SetTextColor(defaults.classColors.ROGUE.r,defaults.classColors.ROGUE.g,defaults.classColors.ROGUE.b);
 		textOff:SetTextColor(defaults.classColors.ROGUE.r,defaults.classColors.ROGUE.g,defaults.classColors.ROGUE.b);	
+
 	elseif (string.match(class, "Sacerdot") or string.match(class, "Priest")) then 
 		textMain:SetTextColor(defaults.classColors.PRIEST.r,defaults.classColors.PRIEST.g,defaults.classColors.PRIEST.b);
 		textOff:SetTextColor(defaults.classColors.PRIEST.r,defaults.classColors.PRIEST.g,defaults.classColors.PRIEST.b);
+
 	elseif (string.match(class, "Druid")) then 
 		textMain:SetTextColor(defaults.classColors.DRUID.r,defaults.classColors.DRUID.g,defaults.classColors.DRUID.b);
 		textOff:SetTextColor(defaults.classColors.DRUID.r,defaults.classColors.DRUID.g,defaults.classColors.DRUID.b);
+
 	elseif (string.match(class, "Caball") or string.match(class, "DEATHKNIGHT")) then 
 		textMain:SetTextColor(defaults.classColors.DEATHKNIGHT.r,defaults.classColors.DEATHKNIGHT.g,defaults.classColors.DEATHKNIGHT.b);
 		textOff:SetTextColor(defaults.classColors.DEATHKNIGHT.r,defaults.classColors.DEATHKNIGHT.g,defaults.classColors.DEATHKNIGHT.b);
+
 	elseif (string.match(class, "Palad")) then 
 		textMain:SetTextColor(defaults.classColors.PALADIN.r,defaults.classColors.PALADIN.g,defaults.classColors.PALADIN.b);
 		textOff:SetTextColor(defaults.classColors.PALADIN.r,defaults.classColors.PALADIN.g,defaults.classColors.PALADIN.b);
@@ -97,7 +105,23 @@ function Config:ApplyClassColor(textMain,textOff,class)
 end
 
 --[[
-	Crreate Counters for lists.
+	Create NameLabels for both lists.
+]]--
+function Config:CreateTextLabels(layer)
+	local text;
+	local texts={};
+	for i=1, 40,1 
+		do
+			text=layer:CreateFontString(nil,"OVERLAY","GameFontNormal");
+			text:SetPoint("TOPLEFT", 50, -20*(i-1));	
+			text:SetText("---");
+			texts[i]=text;
+		end
+	return texts
+end
+
+--[[
+	Create Counters for both Lists.
 ]]--
 function Config:CreateTextCounters(layer)
 	local text;
@@ -115,7 +139,7 @@ function Config:CreateTextCounters(layer)
 end
 
 --[[
-	Create + and - buttons for lists.
+	Create Plus and Minus buttons for both lists.
 ]]--
 function Config:CreatePlusButtons(layer,type)
 	local plusBtn;
@@ -151,7 +175,7 @@ function Config:CreatePlusButtons(layer,type)
 end
 
 --[[
-	Scroll Funcionality
+	Scroll Funcionality for ScrollFrame.
 ]]--
 local function ScrollFrame_OnMouseWheel(self, delta)
 	local newValue = self:GetVerticalScroll() - (delta * 20);
@@ -166,7 +190,7 @@ local function ScrollFrame_OnMouseWheel(self, delta)
 end
 
 --[[
-	Tab Funcionality
+	Tab Funcionality for the main Frame.
 ]]--
 local function Tab_OnClick(self)
 	PanelTemplates_SetTab(self:GetParent(), self:GetID());
@@ -180,9 +204,6 @@ local function Tab_OnClick(self)
 	self.content:Show();	
 end
 
---[[
-	Config the tabs of our main layout.
-]]--
 function Config:SetTabs(frame, numTabs, ...)
 	frame.numTabs = numTabs;
 	
@@ -218,7 +239,7 @@ function Config:SetTabs(frame, numTabs, ...)
 end
 
 --[[
-	To create main frames y his childs.
+	Create Main UI.
 ]]--
 function Config:CreateMenu()
 	UIConfig = CreateFrame("Frame", "ZekRollPlusOne", UIParent, "BasicFrameTemplateWithInset");
@@ -265,9 +286,8 @@ function Config:CreateMenu()
 	-- Load Button:	
 	UIConfig.exportBtn = self:CreateButton(UIConfig.OptionsTab,"CENTER", UIConfig.resetBtn, "CENTER",0, -80, "Export", core.Management.Export,true);
 
-	----------------------------------
-	-- List of Raid Members (names, counts, buttons)
-	----------------------------------
+
+	--UIConfig.TextExample=self:CreateText(UIConfig.MainTab,"Druid");
 	UIConfig.TextsMain=self:CreateTextLabels(UIConfig.MainTab);
 	UIConfig.TextsOff=self:CreateTextLabels(UIConfig.OffTab);
 	UIConfig.PlusButtonsMain,UIConfig.MinusButtonsMain=self:CreatePlusButtons(UIConfig.MainTab,"mainSpect");
@@ -321,7 +341,6 @@ function Config:CreateLabel()
 	label:SetMultiLine(true);
 	label:SetMaxLetters(2000);
 	label:SetEnabled(false);
-
 	return label;
 end
 --]]
@@ -356,7 +375,6 @@ end
 	UIConfig.slider1:SetValue(50);
 	UIConfig.slider1:SetValueStep(30);
 	UIConfig.slider1:SetObeyStepOnDrag(true);
-
 	-- Slider 2:
 	UIConfig.slider2 = CreateFrame("SLIDER", nil, UIConfig, "OptionsSliderTemplate");
 	UIConfig.slider2:SetPoint("TOP", UIConfig.slider1, "BOTTOM", 0, -20);
@@ -364,7 +382,6 @@ end
 	UIConfig.slider2:SetValue(40);
 	UIConfig.slider2:SetValueStep(30);
 	UIConfig.slider2:SetObeyStepOnDrag(true);
-
 	----------------------------------
 	-- Check Buttons
 	----------------------------------
@@ -372,7 +389,6 @@ end
 	UIConfig.checkBtn1 = CreateFrame("CheckButton", nil, UIConfig, "UICheckButtonTemplate");
 	UIConfig.checkBtn1:SetPoint("TOPLEFT", UIConfig.slider1, "BOTTOMLEFT", -10, -40);
 	UIConfig.checkBtn1.text:SetText("My Check Button!");
-
 	-- Check Button 2:
 	UIConfig.checkBtn2 = CreateFrame("CheckButton", nil, UIConfig, "UICheckButtonTemplate");
 	UIConfig.checkBtn2:SetPoint("TOPLEFT", UIConfig.checkBtn1, "BOTTOMLEFT", 0, -10);

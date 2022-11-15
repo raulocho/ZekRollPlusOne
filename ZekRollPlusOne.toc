@@ -1,0 +1,11 @@
+## Interface: 30400
+## Title: |cff00ccffZek|rRollPlusOne
+## Notes: Helps with the loot system Roll+1 count for main and off spects.
+## Author: Zek <PANDEMIA>
+## Version: 1.0.0
+## DefaultState: enabled
+## SavedVariables: ZekRollPlusOneDB
+
+Logic.lua
+ZekRollPlusOne.lua
+Init.lua

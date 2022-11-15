@@ -1,7 +1,3 @@
---[[ 
-	Will allow us to create timers to track buff and debuff durations.
-	Timers can be set to icon or timer bar mode.
---]]
 
 ----------------------
 -- Namespaces
@@ -11,14 +7,9 @@ core.Management = {};
 core.Members ={};
 local Management = core.Management;
 
-----------------------
--- Timer functions
-----------------------
 --[[
-	Should return an instance of a Timer (using metatables).
-	A "static" function.
---]]
-
+	Confirm Dialog to Reset info.
+]]--
 StaticPopupDialogs["CONFIRM_RESET"] = {
 	text = "Are you sure you want reset the information?",
 	button1 = "Yes",
@@ -32,10 +23,16 @@ StaticPopupDialogs["CONFIRM_RESET"] = {
 	preferredIndex = 3,  
 }
 
+--[[
+	Call Confirm Dialog.
+]]--
 Management.Reset=function()
 	StaticPopup_Show ("CONFIRM_RESET")
 end
 
+--[[
+	Reset all stored info.
+]]--
 Management.FullReset=function()
 	core.Members ={};
 	for i=1, 40,1 
@@ -50,15 +47,9 @@ Management.FullReset=function()
 		end
 end
 
---[[2
-	Should update the duration of the timer using events.
---]]
-Management.Save= function ()
-	print("hellof");
-end
 
 --[[
-	Destroy the timer after it has expired (recylce it).
+	TODO, the idea is show text in any format to export.
 --]]
 Management.Export=function()
 
@@ -131,6 +122,9 @@ Management.Start=function()
 	end
 end
 
+--[[
+	Add One to the counter.
+]]--
 Management.AddOne=function(self)
 	local index=self:GetID()
 
@@ -144,6 +138,9 @@ Management.AddOne=function(self)
 
 end
 
+--[[
+	Remove One to the counter.
+]]--
 Management.RemoveOne=function(self)
 	local index=self:GetID();
 
@@ -157,6 +154,9 @@ Management.RemoveOne=function(self)
 
 end
 
+--[[
+	Check if a member Exists.
+]]--
 function Exists(members,member)
 	for i=1, #members,1
 	do

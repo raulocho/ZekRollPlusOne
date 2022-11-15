@@ -40,7 +40,9 @@ function Config:GetThemeColor()
 	return c.r, c.g, c.b, c.hex;
 end
 
-
+--[[
+	Function to create a button with a determinated function passed as parameter.
+]]--
 function Config:CreateButton(layer,point, relativeFrame, relativePoint, xOffset,yOffset, text, onClickFunction, inactive)
 	local btn = CreateFrame("Button", "nil", layer, "GameMenuButtonTemplate");
 	btn:SetPoint(point, relativeFrame, relativePoint, xOffset, yOffset);
@@ -56,6 +58,9 @@ function Config:CreateButton(layer,point, relativeFrame, relativePoint, xOffset,
 	return btn;
 end
 
+--[[
+	To Apply Class Color to desired texts.
+]]--
 function Config:ApplyClassColor(textMain,textOff,class)
 	print(class);
 	if (string.match(class, "Bruj")  or string.match(class, "Warlo")) then
@@ -91,29 +96,9 @@ function Config:ApplyClassColor(textMain,textOff,class)
 	end
 end
 
--- TODO Delete, is just for test.
-function Config:CreateText(layer,textInput)
-	local text=layer:CreateFontString(nil,"OVERLAY","GameFontNormal");
-	text:SetPoint("CENTER", 5, -115);
-	text:SetText(textInput);
-	text:SetTextColor(defaults.classColors.DRUID.r,defaults.classColors.DRUID.g,defaults.classColors.DRUID.b);
-	return text
-end
-
-
-function Config:CreateTextLabels(layer)
-	local text;
-	local texts={};
-	for i=1, 40,1 
-		do
-			text=layer:CreateFontString(nil,"OVERLAY","GameFontNormal");
-			text:SetPoint("TOPLEFT", 50, -20*(i-1));	
-			text:SetText("---");
-			texts[i]=text;
-		end
-	return texts
-end
-
+--[[
+	Crreate Counters for lists.
+]]--
 function Config:CreateTextCounters(layer)
 	local text;
 	local texts={};
@@ -129,6 +114,9 @@ function Config:CreateTextCounters(layer)
 	return texts
 end
 
+--[[
+	Create + and - buttons for lists.
+]]--
 function Config:CreatePlusButtons(layer,type)
 	local plusBtn;
 	local plusBtns={};
@@ -162,6 +150,9 @@ function Config:CreatePlusButtons(layer,type)
 	return plusBtns, minusBtns;
 end
 
+--[[
+	Scroll Funcionality
+]]--
 local function ScrollFrame_OnMouseWheel(self, delta)
 	local newValue = self:GetVerticalScroll() - (delta * 20);
 	
@@ -174,6 +165,9 @@ local function ScrollFrame_OnMouseWheel(self, delta)
 	self:SetVerticalScroll(newValue);
 end
 
+--[[
+	Tab Funcionality
+]]--
 local function Tab_OnClick(self)
 	PanelTemplates_SetTab(self:GetParent(), self:GetID());
 	
@@ -186,6 +180,9 @@ local function Tab_OnClick(self)
 	self.content:Show();	
 end
 
+--[[
+	Config the tabs of our main layout.
+]]--
 function Config:SetTabs(frame, numTabs, ...)
 	frame.numTabs = numTabs;
 	
@@ -220,6 +217,9 @@ function Config:SetTabs(frame, numTabs, ...)
 	return unpack(contents);
 end
 
+--[[
+	To create main frames y his childs.
+]]--
 function Config:CreateMenu()
 	UIConfig = CreateFrame("Frame", "ZekRollPlusOne", UIParent, "BasicFrameTemplateWithInset");
 	UIConfig:SetSize(260, 360);
@@ -265,8 +265,9 @@ function Config:CreateMenu()
 	-- Load Button:	
 	UIConfig.exportBtn = self:CreateButton(UIConfig.OptionsTab,"CENTER", UIConfig.resetBtn, "CENTER",0, -80, "Export", core.Management.Export,true);
 
-
-	--UIConfig.TextExample=self:CreateText(UIConfig.MainTab,"Druid");
+	----------------------------------
+	-- List of Raid Members (names, counts, buttons)
+	----------------------------------
 	UIConfig.TextsMain=self:CreateTextLabels(UIConfig.MainTab);
 	UIConfig.TextsOff=self:CreateTextLabels(UIConfig.OffTab);
 	UIConfig.PlusButtonsMain,UIConfig.MinusButtonsMain=self:CreatePlusButtons(UIConfig.MainTab,"mainSpect");
